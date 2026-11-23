@@ -1,79 +1,64 @@
 <!doctype html>
-<html lang="fr" data-theme="teranga"><head><meta charset="utf-8">
+<html lang="fr" data-theme="jour"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Xam-Xam — la sécurité et l’IA expliquées simplement</title>
 <meta name="description" content="Application pédagogique interactive : authentification, attaques, machine learning et sécurisation expliqués pas à pas, avec des analogies.">
-<meta name="theme-color" content="#0b5b36">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b5b36'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700'%3EXX%3C/text%3E%3C/svg%3E">
-<style>:root{--bg:#f4f8f9;--panel:#fff;--ink:#16212b;--mut:#5f6b78;--line:#d8e0e5;--acc:#0f766e;--amb:#d97706;--vio:#7c3aed;--grn:#16a34a;--red:#dc2626;--brand:#0f5d73;--brand2:#0b3f4f;--hero:#e3eaee;--onbrand:#fff;--hi:#fcd34d}
-@media (prefers-color-scheme:dark){:root{--bg:#0d1319;--panel:#151c24;--ink:#e6edf3;--mut:#8b98a5;--line:#2a3541;--acc:#2dd4bf;--amb:#f0a73a;--vio:#a78bfa;--grn:#3fb950;--red:#f85149;--brand:#14536a;--brand2:#0c3a49;--hero:#18222c;--onbrand:#fff;--hi:#fcd34d}}
+<style>:root{--bg:#fff;--panel:#fff;--ink:#111827;--mut:#6b7280;--line:#e5e7eb;--hero:#f5f6f7;--brand:#0b5b36;--acc:#0f766e;--amb:#b7791f;--vio:#6d4bd1;--grn:#15803d;--red:#c62828;color-scheme:light}
+:root[data-theme="nuit"]{--bg:#0b0c0e;--panel:#121417;--ink:#eceef1;--mut:#9aa1ab;--line:#262a30;--hero:#1a1d22;--brand:#3ecf8e;--acc:#2dd4bf;--amb:#f2b632;--vio:#a994f2;--grn:#4ade80;--red:#ff6b6b;color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;padding:0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 "Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;padding:0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);-webkit-font-smoothing:antialiased}
 pre,table{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:12.5px}
-#top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;background:var(--panel)}
-.badge{justify-self:start;background:#000;color:#fff;border-radius:8px;padding:5px 12px;font-size:11px;line-height:1.25}
-.logo{text-align:center;font-size:30px;font-weight:700;color:var(--brand);letter-spacing:-.5px;line-height:1.1}.logo b{color:var(--amb)}
-.logo small{display:block;font-size:12px;font-weight:600;color:var(--mut);letter-spacing:0}
-.flag{justify-self:end;font-size:30px}
-nav{display:flex;justify-content:center;gap:34px;padding:18px 16px;overflow-x:auto;white-space:nowrap;color:var(--onbrand)}
-nav a{cursor:pointer;color:var(--onbrand)}nav a.on{color:var(--hi)}nav a:hover{text-decoration:underline}
-#tabs{background:var(--brand);font-size:18px}#subs{background:var(--brand2);font-size:16px;padding:16px}
-#hero{background:var(--hero);text-align:center;padding:34px 16px 16px}
-#hero h1{font-weight:400;font-size:clamp(26px,4.4vw,46px);line-height:1.15;color:var(--brand);margin:0}
-#title p{margin:6px 0 16px;color:var(--mut)}
-button{font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 14px;cursor:pointer}
-button:hover{border-color:var(--brand)}
-button.go{background:var(--grn);color:#fff;border:0;border-radius:10px;padding:12px 36px;font-size:18px}
-.meta{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin:26px auto 0;max-width:1200px;color:var(--brand)}
+#top{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:1200px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top)) 20px 12px}
+.logo{font-size:24px;font-weight:700;letter-spacing:-.5px;line-height:1.1}.logo b{color:var(--brand)}
+.logo small{display:block;font-size:12px;font-weight:500;color:var(--mut);letter-spacing:0;margin-top:2px}
+.tools{display:flex;align-items:center;gap:10px}
+.pf{text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:14px;font-weight:600;white-space:nowrap;transition:border-color .15s}
+.pf:hover{border-color:var(--ink)}
+button{font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:7px 16px;cursor:pointer;transition:border-color .15s,background .15s}
+button:hover{border-color:var(--ink)}
+#mode{width:36px;height:36px;padding:0;font-size:17px;line-height:1}
+nav{display:flex;gap:28px;overflow-x:auto;white-space:nowrap;max-width:1200px;margin:0 auto;padding:0 20px;scrollbar-width:none}
+nav a{cursor:pointer;color:var(--mut);padding:10px 0;border-bottom:2px solid transparent;font-size:16px;transition:color .15s,border-color .15s}
+nav a:hover{color:var(--ink)}nav a.on{color:var(--ink);border-bottom-color:var(--brand);font-weight:600}
+nav small{font-size:12px;opacity:.7}
+#tabs{max-width:none;margin:0;padding:0 max(20px,calc((100vw - 1160px)/2));border-bottom:1px solid var(--line)}
+#subs{gap:8px;padding-top:16px;padding-bottom:4px}
+#subs a{border:1px solid var(--line);border-radius:999px;padding:5px 14px;font-size:14px}
+#subs a:hover{border-color:var(--ink);color:var(--ink)}
+#subs a.on{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:500}
+#hero{max-width:1200px;margin:0 auto;padding:34px 20px 8px;text-align:center}
+.cat{font-size:12px;letter-spacing:.14em;color:var(--mut);font-weight:600;margin-bottom:8px}
+#hero h1{font-weight:600;font-size:clamp(26px,4vw,40px);line-height:1.15;letter-spacing:-.02em;margin:0}
+#title p{margin:8px 0 20px;color:var(--mut)}
+button.go{background:var(--brand);color:#fff;border:0;padding:12px 34px;font-size:17px;font-weight:600}
+button.go:hover{filter:brightness(1.1)}
+:root[data-theme="nuit"] button.go{color:#04130b}
+.meta{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-top:26px;padding-top:16px;border-top:1px solid var(--line);color:var(--mut);font-size:14px;text-align:left}
 #ctl{display:flex;flex-wrap:wrap;gap:8px}
-main{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:24px;max-width:1200px;margin:0 auto;padding:24px 16px}
-.card{background:var(--panel);border-radius:18px 18px 8px 8px;box-shadow:0 1px 5px #0003;overflow:hidden;min-width:0}.full{grid-column:1/-1}
-.ch{background:var(--brand);color:var(--onbrand);margin:0;padding:14px 24px;font-size:18px;font-weight:500}
-.cb{padding:18px 24px;overflow-x:auto}
-h3{font-size:12px;color:var(--mut);margin:14px 0 6px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
-.st{padding:2px 0;color:var(--mut)}.st.done{color:var(--ink)}.st.cur{color:var(--brand);font-weight:700}
+main{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:20px;max-width:1200px;margin:0 auto;padding:20px 20px 40px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}.full{grid-column:1/-1}
+.ch{margin:0;padding:12px 20px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);font-weight:600;border-bottom:1px solid var(--line)}
+.cb{padding:18px 20px;overflow-x:auto}
+h3{font-size:12px;color:var(--mut);margin:16px 0 6px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+small{color:var(--mut)}
+.who{padding:3px 0}.who i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px}.who span{color:var(--mut)}
+.st{display:flex;gap:10px;padding:5px 8px;margin:0 -8px;color:var(--mut);border-radius:8px}.st.done{color:var(--ink)}.st.cur{color:var(--ink);font-weight:600;background:var(--hero)}
+.st b{min-width:24px;color:var(--brand);font-variant-numeric:tabular-nums}.st small{display:block;font-weight:400}
 svg{width:100%;height:auto;display:block}
-dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;margin:10px 0}dt{font-weight:700}dt::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--brand);margin-right:8px}dd{margin:0}
-.box{border:1px solid var(--red);border-radius:8px;padding:10px;margin-top:10px}.box b{color:var(--red)}
-table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:4px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
-small{color:var(--mut)}.who{padding:3px 0}.who i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px}.who span{color:var(--mut)}
-th{color:var(--mut);font-weight:600}tr[onclick]{cursor:pointer}tr.on{background:var(--hero)}
-pre{white-space:pre-wrap;word-break:break-all;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;margin:8px 0}
-.cat{font-size:12px;letter-spacing:.14em;color:var(--mut);font-weight:700;margin-bottom:8px}
-nav small{color:inherit;opacity:.65;font-size:13px}
-.st{display:flex;gap:10px;padding:5px 0}.st b{min-width:24px;color:var(--brand);font-variant-numeric:tabular-nums}.st small{display:block}
-@media (max-width:899px){main{grid-template-columns:1fr}nav{justify-content:flex-start;gap:24px}#top{grid-template-columns:1fr auto}.flag{display:none}}
-/* ---------- Finitions design ---------- */
-#top{border-bottom:1px solid var(--line)}
-.pf{justify-self:end;text-decoration:none;color:var(--brand);border:1.5px solid var(--brand);border-radius:999px;padding:6px 16px;font-weight:600;font-size:14px;white-space:nowrap;transition:background .15s,color .15s}
-.pf:hover{background:var(--brand);color:var(--onbrand)}
-nav a{padding:4px 2px;border-bottom:3px solid transparent;transition:border-color .15s}
-nav a.on{border-bottom-color:var(--hi)}
-a:focus-visible,button:focus-visible{outline:3px solid var(--hi);outline-offset:3px;border-radius:6px}
-#hero{background:linear-gradient(180deg,var(--hero),var(--bg))}
-.card{border:1px solid var(--line);box-shadow:0 2px 10px #0001}
-.ch{letter-spacing:.01em}
-button.go{box-shadow:0 3px 10px #16a34a55;transition:transform .1s}button.go:active{transform:scale(.97)}
-tr:nth-child(even) td{background:color-mix(in srgb,var(--hero) 45%,transparent)}
-tr.on td{background:var(--hero)}
-.st.cur{background:color-mix(in srgb,var(--brand) 10%,transparent);border-radius:8px;padding-left:6px;padding-right:6px}
-footer{text-align:center;color:var(--mut);padding:24px 16px calc(24px + env(safe-area-inset-bottom));font-size:13px;border-top:1px solid var(--line)}
-footer a{color:var(--brand);font-weight:600}
-@media (max-width:899px){.badge{display:none}#top{grid-template-columns:1fr auto}.logo{text-align:left}}
+dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;margin:12px 0}dt{font-weight:600}dt::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--brand);margin-right:8px;vertical-align:middle}dd{margin:0}
+.box{border:1px solid var(--line);border-left:3px solid var(--red);border-radius:8px;padding:10px 12px;margin-top:12px;background:var(--hero)}.box b{color:var(--red)}
+table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--mut);font-weight:600}tr[onclick]{cursor:pointer}tr[onclick]:hover td,tr.on td{background:var(--hero)}
+pre{white-space:pre-wrap;word-break:break-all;background:var(--hero);border:1px solid var(--line);border-radius:10px;padding:10px;margin:8px 0}
+footer{max-width:1200px;margin:0 auto;text-align:center;color:var(--mut);padding:24px 20px calc(24px + env(safe-area-inset-bottom));font-size:13px;border-top:1px solid var(--line)}
+footer a{color:var(--ink);font-weight:600}
+a:focus-visible,button:focus-visible{outline:2px solid var(--brand);outline-offset:3px;border-radius:6px}
+@media (max-width:899px){main{grid-template-columns:1fr}.logo small{display:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
-/* ---------- Thème noir et blanc (bouton « Thème » dans la barre d’actions) ---------- */
-:root[data-theme="nb"]{--bg:#f2f2f2;--panel:#fff;--ink:#000;--mut:#555;--line:#cfcfcf;--acc:#999;--amb:#2a2a2a;--vio:#555;--grn:#777;--red:#000;--brand:#000;--brand2:#222;--hero:#e6e6e6;--onbrand:#fff;--hi:#fff}
-@media (prefers-color-scheme:dark){:root[data-theme="nb"]{--bg:#000;--panel:#0b0b0b;--ink:#fff;--mut:#aaa;--line:#3a3a3a;--acc:#999;--amb:#ddd;--vio:#bbb;--grn:#888;--red:#fff;--brand:#1c1c1c;--brand2:#111;--hero:#141414;--onbrand:#fff;--hi:#fff}}
-:root[data-theme="nb"] button.go{background:var(--ink);color:var(--bg);box-shadow:none}
-:root[data-theme="nb"] nav a:not(.on){opacity:.7}
-/* ---------- Palettes : Teranga (défaut), Sable, Noir & blanc. Le bouton « Thème » les fait tourner. ---------- */
-:root[data-theme="teranga"]{--bg:#f6f7f2;--panel:#fff;--ink:#14201a;--mut:#5b675f;--line:#dde3d6;--acc:#0b7a43;--amb:#c98a00;--vio:#6d4bd1;--grn:#0f8a4b;--red:#d4262e;--brand:#0b5b36;--brand2:#073d24;--hero:#e7eddc;--onbrand:#fff;--hi:#ffe14a}
-:root[data-theme="sable"]{--bg:#faf6ef;--panel:#fff;--ink:#231a14;--mut:#6f6257;--line:#e8dccb;--acc:#1f5f8b;--amb:#d9791c;--vio:#7a4cc2;--grn:#2e8b57;--red:#c9302c;--brand:#b4532a;--brand2:#7d3318;--hero:#f1e4d2;--onbrand:#fff;--hi:#ffd98a}
-@media (prefers-color-scheme:dark){
-:root[data-theme="teranga"]{--bg:#0c130f;--panel:#141d17;--ink:#e9f0ea;--mut:#98a79d;--line:#27352c;--acc:#35c47b;--amb:#f2b632;--vio:#a994f2;--grn:#3fbf7a;--red:#ff5a5f;--brand:#0f5a37;--brand2:#0a3d26;--hero:#16241b;--onbrand:#fff;--hi:#ffe14a}
-:root[data-theme="sable"]{--bg:#16110d;--panel:#201912;--ink:#f3eadf;--mut:#b2a392;--line:#3a2d22;--acc:#5aa9e6;--amb:#f0a04b;--vio:#b79af0;--grn:#5cc08a;--red:#ff6b61;--brand:#8a3f1f;--brand2:#612b14;--hero:#2a2018;--onbrand:#fff;--hi:#ffd98a}}
 </style></head><body>
-<div id="top"><div class="badge">Hors-ligne<br>0 dépendance</div><div class="logo">Xam-<b>Xam</b><small>Sécurité et IA, pas à pas</small></div><a class="pf" href="https://victordgomis.duckdns.org" target="_blank" rel="noopener noreferrer">Mon portfolio ↗</a></div>
+<header id="top"><div class="logo">Xam-<b>Xam</b><small>Sécurité et IA, pas à pas</small></div><div class="tools"><a class="pf" href="https://victordgomis.duckdns.org" target="_blank" rel="noopener noreferrer">Développé par Victor ↗</a><button id="mode" onclick="theme()" aria-label="Basculer entre le mode jour et le mode nuit" title="Jour / nuit">☾</button></div></header>
 <nav id="tabs"></nav><nav id="subs"></nav>
 <section id="hero"><div id="title"></div><div id="play"></div><div class="meta"><span id="metal"></span><span id="ctl"></span></div></section>
 <main>
@@ -468,9 +453,9 @@ const TIT={
 [AUT,ATK,SEC].forEach(L=>L.forEach(c=>{(TIT[c.name]||[]).forEach((t,i)=>{if(c.steps[i])c.steps[i][6]=t})}));
 const LISTS=()=>[AUT,ATK,ML,SEC][S.tab],LISTS_AT=i=>[AUT,ATK,ML,SEC][i];
 /* ---------- Contrôles ---------- */
-const TH=[['teranga','Teranga'],['sable','Sable'],['nb','Noir &amp; blanc']];
-function theme(){S.th=((S.th||0)+1)%TH.length;document.documentElement.setAttribute('data-theme',TH[S.th][0]);go()}
-function ctl(){$('#play').innerHTML=`<button class="go" onclick="tog()">${S.play?'⏸ Pause':'▶ Lecture'}</button>`;$('#ctl').innerHTML='<button onclick="adv()">Avancer</button><button onclick="rst()">Réinitialiser</button>'+(S.tab==2&&S.i[2]==1?'<button onclick="ML[1].seed++;rst()">Nouveau tirage</button>':'')+`<button onclick="S.kid=!S.kid;go()">${S.kid?'Mode enfant ✓':'Mode technique'}</button><button onclick="theme()">Thème : ${TH[S.th||0][1]}</button>`}
+function mode(){const m=$('#mode');m.textContent=S.night?'☀':'☾';m.setAttribute('aria-label',S.night?'Passer en mode jour':'Passer en mode nuit');$('meta[name="theme-color"]').setAttribute('content',S.night?'#0b0c0e':'#ffffff')}
+function theme(){S.night=!S.night;document.documentElement.setAttribute('data-theme',S.night?'nuit':'jour');mode()}
+function ctl(){$('#play').innerHTML=`<button class="go" onclick="tog()">${S.play?'⏸ Pause':'▶ Lecture'}</button>`;$('#ctl').innerHTML='<button onclick="adv()">Avancer</button><button onclick="rst()">Réinitialiser</button>'+(S.tab==2&&S.i[2]==1?'<button onclick="ML[1].seed++;rst()">Nouveau tirage</button>':'')+`<button onclick="S.kid=!S.kid;go()">${S.kid?'Mode enfant ✓':'Mode technique'}</button>`}
 function go(){$('#tabs').innerHTML=TABS.map((t,i)=>`<a class="${i==S.tab?'on':''}" role="button" tabindex="0" onkeydown="if(event.key==='Enter')this.click()" onclick="tab(${i})">${t} <small>${LISTS_AT(i).length}</small></a>`).join('');S.tab!=2?flowView():mlView();ctl()}
 function stop(){S.play=false;clearTimeout(S.t)}
 function tab(i){stop();S.tab=i;S.sel=-1;S.n=0;go()}
@@ -482,5 +467,5 @@ function adv(){let ok;if(S.tab!=2){ok=S.n<cur().steps.length;if(ok){S.n++;S.sel=
 if(!ok)S.play=false;go();if(ok&&S.tab!=2){const s=cur().steps[S.n-1];fly(s[0],s[1],NM[s[0]].c)}}
 $('#svg').onclick=e=>{if(S.tab!=2||S.i[2]!=0)return;const r=$('#svg').getBoundingClientRect(),x=((e.clientX-r.left)/r.width*600-40)/540,y=(330-(e.clientY-r.top)/r.height*360)/310;
 if(x>=0&&x<=1&&y>=0&&y<=1){ML[0].p.push([x,y]);ML[0].log(' (+1 point)');S.sel=-1;go()}};
-ML.forEach(m=>m.init());go();
+ML.forEach(m=>m.init());mode();go();
 </script></body></html>

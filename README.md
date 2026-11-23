@@ -1,6 +1,6 @@
 # Xam-Xam
 
-*Xam-xam*, en wolof, c'est « le savoir ». C'est le nom que j'ai donné à ce petit site où l'on voit, étape par étape, comment fonctionnent la connexion à un site, certaines attaques courantes, quelques algorithmes de machine learning et les protections qui vont avec.
+C'est un site qui aide étape par étape, comment fonctionnent la connexion à un site, certaines attaques courantes, quelques algorithmes de machine learning et les protections qui vont avec.
 
 ## Un projet pour apprendre, rien d'autre
 
