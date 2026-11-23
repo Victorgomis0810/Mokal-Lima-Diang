@@ -35,4 +35,3 @@ Les scénarios sont simplifiés pour rester lisibles : la réalité est plus nua
 ## Qui
 
 Victor Dacotine Gomis, étudiant en informatique. Mon portfolio : https://victordgomis.duckdns.org
-# Mokal-Lima-Diang
