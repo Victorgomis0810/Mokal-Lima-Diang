@@ -1,4 +1,4 @@
-# Xam-Xam
+# Mokal Lima Diang
 
 C'est un site qui aide étape par étape, comment fonctionnent la connexion à un site, certaines attaques courantes, quelques algorithmes de machine learning et les protections qui vont avec.
 
@@ -34,4 +34,5 @@ Les scénarios sont simplifiés pour rester lisibles : la réalité est plus nua
 
 ## Qui
 
-Victor Dacotine Gomis, étudiant en informatique à l'UCAO (Dakar). Mon portfolio : https://victordgomis.duckdns.org
+Victor Dacotine Gomis, étudiant en informatique. Mon portfolio : https://victordgomis.duckdns.org
+# Mokal-Lima-Diang
