@@ -1,43 +1,37 @@
-# Tech Explorer
+# Xam-Xam
 
-Application pédagogique en un seul fichier (`index.html`) : HTML + CSS + JS, sans dépendance ni appel réseau.
+*Xam-xam*, en wolof, c'est « le savoir ». C'est le nom que j'ai donné à ce petit site où l'on voit, étape par étape, comment fonctionnent la connexion à un site, certaines attaques courantes, quelques algorithmes de machine learning et les protections qui vont avec.
 
-## Lancer sur ton Mac (terminal)
-```bash
-mkdir -p ~/Projets/tech-explorer && cd ~/Projets/tech-explorer
-mv ~/Downloads/index.html ~/Downloads/README.md .
-open index.html                      # ouverture directe dans le navigateur
-python3 -m http.server 8000          # ou serveur local : http://localhost:8000
-git init -b main && printf ".DS_Store\n" > .gitignore
-git add . && git commit -m "Tech Explorer : première version"
-code .                               # ouvre VS Code (voir ci-dessous si la commande est introuvable)
-```
-Commande `code` introuvable : dans VS Code, `Cmd+Shift+P` puis « Shell Command: Install 'code' command in PATH ». Sinon : `open -a "Visual Studio Code" .`
+## Un projet pour apprendre, rien d'autre
 
-## Déployer sur Vercel
-```bash
-brew install node                    # si npm n'est pas installé
-npm i -g vercel
-vercel login
-vercel --prod                        # Framework : Other, pas de build
-```
-Ou : pousser le dépôt sur GitHub puis l'importer sur vercel.com (Build Command et Output Directory vides).
+Ce projet est purement pédagogique. Tout ce que tu y vois est inventé : les adresses IP, les mots de passe, les jetons, les paquets. Il n'y a aucun outil d'attaque dedans, seulement des schémas animés et des explications. Il ne fait aucun appel réseau, ne se connecte à rien et ne collecte aucune donnée.
 
-## Couleurs et thème
-Toutes les couleurs sont des variables CSS en haut du fichier (`:root`, version sombre dans `@media (prefers-color-scheme:dark)`). Le thème noir et blanc est le bloc `:root[data-theme="nb"]`. Le bouton « Thème » de la barre d'actions bascule entre les deux.
+Si tu veux tester la sécurité d'un système, fais-le seulement sur le tien, ou avec l'accord écrit de son propriétaire.
 
-## Ajouter un scénario (Authentification, Attaques, Sécurisation)
-Ajouter un objet dans le tableau `AUT`, `ATK` ou `SEC` :
-```js
-{name:'Nom',sub:'Sous-titre',desc:'…',kv:[['Clé','Valeur'],…x4],atk:'Défense ou attaque',t:null,
- nodes:{a:['Nom','adresse','rôle (mode enfant)',x,y,'--amb'], b:[…]},   // composants séparés
- steps:[['a','b','PROTO','Info courte',ms,octets,'Titre','Explication','Texte décodé'],…],
- k:{desc:'…',kv:[…],atk:'…',e:['une explication enfant par étape',…]}}
-```
-Puis ajouter les noms professionnels des étapes dans l'objet `TIT` (clé = nom du scénario).
+## Pourquoi je l'ai fait
 
-## Ajouter un algorithme ML
-Ajouter un objet dans `ML` : `name, sub, desc, kv, trap, cols`, puis `init()`, `step()` (qui fait `this.rows.push({c:[cellules], d:'détail du calcul'})`) et `draw()` (SVG). Utiliser `rng(graine)` pour rester reproductible.
+En préparant mon mémoire de fin d'études (meet_VF_AI, une application de gestion de réunions), j'ai passé beaucoup de temps à comprendre des notions comme Nginx, Redis, les jetons JWT ou les en-têtes de sécurité. Je me suis dit que ces choses se comprennent mieux avec une image et une comparaison de la vie de tous les jours qu'avec une définition. L'idée du site vient de Protocol Explorer, que j'avais trouvé très clair.
 
-## Pistes d'évolution
-Mode « rejouer en attaquant », Random Forest, PCA, projet Mobile Money fraude, 3 sujets ML restants (Transformer, Whisper/WER, LLM), onglet Architecture.
+## Comment ça marche
+
+Quatre onglets : Authentification (8 sujets), Attaques (8), Machine Learning (5) et Sécurisation (8). Dans chacun, tu choisis un sujet, puis tu cliques sur Lecture ou Avancer pour suivre le trajet des messages entre les composants. En bas, le tableau montre ce qui circule, et un clic sur une ligne détaille le paquet.
+
+Le bouton « Mode enfant » donne des explications avec des comparaisons simples. « Mode technique » donne les termes exacts. Le bouton « Thème » change les couleurs.
+
+## L'essayer chez soi
+
+Il suffit d'ouvrir `index.html` dans un navigateur. Pas d'installation, pas de dépendance.
+
+Pour le mettre en ligne, par exemple sur Vercel : mets `index.html` dans un dépôt GitHub, importe le dépôt sur vercel.com, laisse « Other » comme framework et ne mets pas de commande de build.
+
+## Pour les curieux
+
+Tout est dans un seul fichier. Les couleurs sont des variables CSS au début du fichier. Chaque sujet est un objet dans les tableaux `AUT`, `ATK`, `SEC` (ou `ML` pour le machine learning), donc en ajouter un revient à copier un objet existant et à changer les textes.
+
+## Limites
+
+Les scénarios sont simplifiés pour rester lisibles : la réalité est plus nuancée. Ça ne remplace ni un vrai cours de cybersécurité ni la documentation officielle des outils. Il me reste à ajouter trois sujets de machine learning (Transformer, Whisper, modèles de langage).
+
+## Qui
+
+Victor Dacotine Gomis, étudiant en informatique à l'UCAO (Dakar). Mon portfolio : https://victordgomis.duckdns.org

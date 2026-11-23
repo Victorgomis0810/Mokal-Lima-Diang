@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="fr"><head><meta charset="utf-8">
+<html lang="fr" data-theme="teranga"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Tech Explorer — authentification, attaques, ML et sécurité expliqués simplement</title>
+<title>Xam-Xam — la sécurité et l’IA expliquées simplement</title>
 <meta name="description" content="Application pédagogique interactive : authentification, attaques, machine learning et sécurisation expliqués pas à pas, avec des analogies.">
-<meta name="theme-color" content="#0f5d73">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f5d73'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700'%3ETE%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#0b5b36">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b5b36'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700'%3EXX%3C/text%3E%3C/svg%3E">
 <style>:root{--bg:#f4f8f9;--panel:#fff;--ink:#16212b;--mut:#5f6b78;--line:#d8e0e5;--acc:#0f766e;--amb:#d97706;--vio:#7c3aed;--grn:#16a34a;--red:#dc2626;--brand:#0f5d73;--brand2:#0b3f4f;--hero:#e3eaee;--onbrand:#fff;--hi:#fcd34d}
 @media (prefers-color-scheme:dark){:root{--bg:#0d1319;--panel:#151c24;--ink:#e6edf3;--mut:#8b98a5;--line:#2a3541;--acc:#2dd4bf;--amb:#f0a73a;--vio:#a78bfa;--grn:#3fb950;--red:#f85149;--brand:#14536a;--brand2:#0c3a49;--hero:#18222c;--onbrand:#fff;--hi:#fcd34d}}
 *{box-sizing:border-box}
@@ -66,8 +66,14 @@ footer a{color:var(--brand);font-weight:600}
 @media (prefers-color-scheme:dark){:root[data-theme="nb"]{--bg:#000;--panel:#0b0b0b;--ink:#fff;--mut:#aaa;--line:#3a3a3a;--acc:#999;--amb:#ddd;--vio:#bbb;--grn:#888;--red:#fff;--brand:#1c1c1c;--brand2:#111;--hero:#141414;--onbrand:#fff;--hi:#fff}}
 :root[data-theme="nb"] button.go{background:var(--ink);color:var(--bg);box-shadow:none}
 :root[data-theme="nb"] nav a:not(.on){opacity:.7}
+/* ---------- Palettes : Teranga (défaut), Sable, Noir & blanc. Le bouton « Thème » les fait tourner. ---------- */
+:root[data-theme="teranga"]{--bg:#f6f7f2;--panel:#fff;--ink:#14201a;--mut:#5b675f;--line:#dde3d6;--acc:#0b7a43;--amb:#c98a00;--vio:#6d4bd1;--grn:#0f8a4b;--red:#d4262e;--brand:#0b5b36;--brand2:#073d24;--hero:#e7eddc;--onbrand:#fff;--hi:#ffe14a}
+:root[data-theme="sable"]{--bg:#faf6ef;--panel:#fff;--ink:#231a14;--mut:#6f6257;--line:#e8dccb;--acc:#1f5f8b;--amb:#d9791c;--vio:#7a4cc2;--grn:#2e8b57;--red:#c9302c;--brand:#b4532a;--brand2:#7d3318;--hero:#f1e4d2;--onbrand:#fff;--hi:#ffd98a}
+@media (prefers-color-scheme:dark){
+:root[data-theme="teranga"]{--bg:#0c130f;--panel:#141d17;--ink:#e9f0ea;--mut:#98a79d;--line:#27352c;--acc:#35c47b;--amb:#f2b632;--vio:#a994f2;--grn:#3fbf7a;--red:#ff5a5f;--brand:#0f5a37;--brand2:#0a3d26;--hero:#16241b;--onbrand:#fff;--hi:#ffe14a}
+:root[data-theme="sable"]{--bg:#16110d;--panel:#201912;--ink:#f3eadf;--mut:#b2a392;--line:#3a2d22;--acc:#5aa9e6;--amb:#f0a04b;--vio:#b79af0;--grn:#5cc08a;--red:#ff6b61;--brand:#8a3f1f;--brand2:#612b14;--hero:#2a2018;--onbrand:#fff;--hi:#ffd98a}}
 </style></head><body>
-<div id="top"><div class="badge">Hors-ligne<br>0 dépendance</div><div class="logo">Tech<b>Explorer</b><small>Sécurité et IA, pas à pas</small></div><a class="pf" href="https://victordgomis.duckdns.org" target="_blank" rel="noopener noreferrer">Mon portfolio ↗</a></div>
+<div id="top"><div class="badge">Hors-ligne<br>0 dépendance</div><div class="logo">Xam-<b>Xam</b><small>Sécurité et IA, pas à pas</small></div><a class="pf" href="https://victordgomis.duckdns.org" target="_blank" rel="noopener noreferrer">Mon portfolio ↗</a></div>
 <nav id="tabs"></nav><nav id="subs"></nav>
 <section id="hero"><div id="title"></div><div id="play"></div><div class="meta"><span id="metal"></span><span id="ctl"></span></div></section>
 <main>
@@ -75,7 +81,7 @@ footer a{color:var(--brand);font-weight:600}
 <aside class="card"><h2 class="ch">Fiche de synthèse</h2><div class="cb" id="right"></div></aside>
 <section class="card full"><h2 class="ch">Paquets décodés</h2><div class="cb" id="bot"></div></section>
 </main>
-<footer>Tech Explorer · conçu par Victor Dacotine Gomis · <a href="https://victordgomis.duckdns.org" target="_blank" rel="noopener noreferrer">victordgomis.duckdns.org ↗</a><br>Données fictives à but pédagogique · aucun appel réseau, aucune donnée collectée</footer>
+<footer>Xam-Xam, « le savoir » en wolof · projet pédagogique de Victor Dacotine Gomis · <a href="https://victordgomis.duckdns.org" target="_blank" rel="noopener noreferrer">victordgomis.duckdns.org ↗</a><br>Données fictives à but pédagogique · aucun appel réseau, aucune donnée collectée</footer>
 <script>
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -462,8 +468,9 @@ const TIT={
 [AUT,ATK,SEC].forEach(L=>L.forEach(c=>{(TIT[c.name]||[]).forEach((t,i)=>{if(c.steps[i])c.steps[i][6]=t})}));
 const LISTS=()=>[AUT,ATK,ML,SEC][S.tab],LISTS_AT=i=>[AUT,ATK,ML,SEC][i];
 /* ---------- Contrôles ---------- */
-function theme(){S.nb=!S.nb;document.documentElement.setAttribute('data-theme',S.nb?'nb':'couleur');go()}
-function ctl(){$('#play').innerHTML=`<button class="go" onclick="tog()">${S.play?'⏸ Pause':'▶ Lecture'}</button>`;$('#ctl').innerHTML='<button onclick="adv()">Avancer</button><button onclick="rst()">Réinitialiser</button>'+(S.tab==2&&S.i[2]==1?'<button onclick="ML[1].seed++;rst()">Nouveau tirage</button>':'')+`<button onclick="S.kid=!S.kid;go()">${S.kid?'Mode enfant ✓':'Mode technique'}</button><button onclick="theme()">${S.nb?'Thème : noir &amp; blanc':'Thème : couleur'}</button>`}
+const TH=[['teranga','Teranga'],['sable','Sable'],['nb','Noir &amp; blanc']];
+function theme(){S.th=((S.th||0)+1)%TH.length;document.documentElement.setAttribute('data-theme',TH[S.th][0]);go()}
+function ctl(){$('#play').innerHTML=`<button class="go" onclick="tog()">${S.play?'⏸ Pause':'▶ Lecture'}</button>`;$('#ctl').innerHTML='<button onclick="adv()">Avancer</button><button onclick="rst()">Réinitialiser</button>'+(S.tab==2&&S.i[2]==1?'<button onclick="ML[1].seed++;rst()">Nouveau tirage</button>':'')+`<button onclick="S.kid=!S.kid;go()">${S.kid?'Mode enfant ✓':'Mode technique'}</button><button onclick="theme()">Thème : ${TH[S.th||0][1]}</button>`}
 function go(){$('#tabs').innerHTML=TABS.map((t,i)=>`<a class="${i==S.tab?'on':''}" role="button" tabindex="0" onkeydown="if(event.key==='Enter')this.click()" onclick="tab(${i})">${t} <small>${LISTS_AT(i).length}</small></a>`).join('');S.tab!=2?flowView():mlView();ctl()}
 function stop(){S.play=false;clearTimeout(S.t)}
 function tab(i){stop();S.tab=i;S.sel=-1;S.n=0;go()}
