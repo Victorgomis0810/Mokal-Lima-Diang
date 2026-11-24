@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mokal-lima-diang.vercel.app/sitemap.xml
