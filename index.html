@@ -54,6 +54,9 @@ th{color:var(--mut);font-weight:600}tr[onclick]{cursor:pointer}tr[onclick]:hover
 pre{white-space:pre-wrap;word-break:break-all;background:var(--hero);border:1px solid var(--line);border-radius:10px;padding:10px;margin:8px 0}
 footer{max-width:1200px;margin:0 auto;text-align:center;color:var(--mut);padding:24px 20px calc(24px + env(safe-area-inset-bottom));font-size:13px;border-top:1px solid var(--line)}
 footer a{color:var(--ink);font-weight:600}
+.pr{color:var(--mut);margin:6px 0}.tg{display:inline-block;border:1px solid var(--line);border-radius:6px;padding:0 7px;margin-right:8px;font-size:12px;font-weight:700;color:var(--ink);background:var(--hero)}
+.an td{white-space:normal;vertical-align:top}.pt{font-weight:700;color:var(--brand);white-space:nowrap}.an td:nth-child(2){word-break:break-all;font-family:ui-monospace,Menlo,monospace;font-size:12px}
+dl.vv{grid-template-columns:1fr;gap:0}.vv dt{margin-top:8px}.vv dd{color:var(--mut)}
 svg text{font-family:inherit}
 .nm{font-size:12.5px;font-weight:700;fill:var(--ink)}.ad{font-size:9.5px;fill:var(--mut);font-family:ui-monospace,Menlo,monospace}.c1{font-size:11px;fill:var(--mut)}.c2{font-size:13px;font-weight:700;fill:var(--brand)}
 .flow{animation:dash .7s linear infinite}@keyframes dash{to{stroke-dashoffset:-13}}
@@ -336,8 +339,87 @@ k:{desc:'On engage un faux cambrioleur gentil qui essaie toutes les portes de ta
 const b64=s=>btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 const JH={alg:'HS256',typ:'JWT'},JP={sub:'42',nom:'Awa',role:'user',exp:1767225600};
 const jwt=()=>`<span style="color:var(--red)">${b64(JSON.stringify(JH))}</span>.<span style="color:var(--vio)">${b64(JSON.stringify(JP))}</span>.<span style="color:var(--acc)">${b64('signature-fictive')}</span>`;
-function decode(s,i,c){const ex=S.kid&&c.k&&c.k.e?c.k.e[i]:s[7];const j=s[8].includes('{JWT}');let h=esc(s[8]).replace('{JWT}',jwt());
-return `<b>${esc(s[6])}</b><p>${ex}</p><pre>${h}</pre>`+(j?`<pre>En-tête : ${JSON.stringify(JH)}\nCharge : ${JSON.stringify(JP)}\nSignature : HMAC-SHA256(en-tête.charge, secret) — fictive ici</pre>`:'')}
+/* ---------- Glossaire : chaque mot d’un paquet est défini (définition simple, précision technique) ---------- */
+const G={
+'http':['Le langage du web : on pose une question (requête), on reçoit une réponse. Sans chiffrement, comme une carte postale.','Protocole requête/réponse, en clair.'],
+'https':['HTTP dans une enveloppe scellée : personne en route ne peut lire.','HTTP sur TLS, port 443.'],
+'tls':['La poignée de main qui crée un coffre secret entre toi et le site, et vérifie sa carte d’identité.','Négociation de clés et authentification par certificat.'],
+'sql':['La langue pour poser des questions à la base de données.','Langage de requêtes relationnelles.'],
+'arp':['Le « qui a cette adresse ? » du réseau local : il relie une adresse IP à une machine.','Résolution IP vers adresse MAC, sans authentification.'],
+'ssh':['Une porte sécurisée pour piloter un serveur à distance.','Shell distant chiffré, authentification par clé.'],
+'tcp':['Le téléphone du réseau : on vérifie que chaque message arrive.','Transport fiable orienté connexion.'],
+'syslog':['Le cahier de bord où chaque programme note ce qui se passe.','Collecte centralisée de journaux.'],
+'wazuh':['Le centre de surveillance qui lit les journaux et lance l’alarme.','SIEM et détection d’intrusion, règles d’alerte.'],
+'acme':['La conversation automatique avec la mairie des certificats pour obtenir et renouveler la carte d’identité du site.','Protocole de délivrance de certificats (Let’s Encrypt).'],
+'redis':['Un tableau d’affichage ultra rapide, en mémoire, partagé entre programmes.','Magasin clé-valeur en mémoire (channel layer).'],
+'pare-feu':['La grille du vigile : elle laisse passer ou bloque selon l’adresse.','Filtrage de paquets (iptables).'],
+'rapport':['Le compte rendu écrit de l’audit.','Résultat d’un audit de sécurité.'],
+'nginx':['Le portier : il reçoit tout et redirige.','Reverse proxy.'],
+'local':['Une action faite sur place, sans passer par le réseau.','Opération locale.'],
+'get':['Demander à lire quelque chose.','Lecture, sans modification.'],
+'post':['Envoyer des données pour créer ou modifier quelque chose.','Envoi de données avec effet sur le serveur.'],
+'options':['Demander à l’avance : « ai-je le droit ? ».','Pré-vérification (preflight CORS).'],
+'200':['Tout va bien.','OK.'],'201':['Créé avec succès.','Created.'],
+'301':['Cette page a déménagé pour de bon : va ailleurs.','Redirection permanente.'],
+'302':['Va voir ailleurs, juste cette fois.','Redirection temporaire.'],
+'400':['Ta demande est mal formée.','Bad Request.'],
+'401':['Je ne sais pas qui tu es : montre ton identité.','Non authentifié.'],
+'403':['Je sais qui tu es, mais tu n’as pas le droit.','Interdit.'],
+'413':['Ton envoi est trop gros.','Payload Too Large.'],
+'429':['Trop de demandes : calme-toi.','Too Many Requests.'],
+'host':['L’adresse du site demandé.','Nom d’hôte visé.'],
+'cookie':['Le bracelet que ton navigateur montre à chaque visite.','Cookies renvoyés au serveur.'],
+'set-cookie':['Le serveur te remet un bracelet à garder.','Dépose un cookie avec ses attributs.'],
+'authorization':['Ta preuve d’identité (souvent un jeton).','Schéma d’authentification et jeton.'],
+'location':['La nouvelle adresse où aller.','Cible de la redirection.'],
+'content-type':['Le type de contenu envoyé (texte, formulaire, JSON…).','Type MIME du corps.'],
+'origin':['D’où vient la demande (de quel site).','Origine de la requête, base de CORS.'],
+'access-control-allow-origin':['La liste d’invités : quel site a le droit de lire la réponse.','Autorisation CORS d’une origine.'],
+'access-control-request-method':['Ce que le navigateur veut faire juste après.','Méthode envisagée (preflight).'],
+'x-frame-options':['Interdit d’afficher la page dans un cadre.','Protection anti-clickjacking.'],
+'strict-transport-security':['Ordre de toujours utiliser HTTPS pendant une longue durée.','HSTS (max-age).'],
+'x-content-type-options':['Le navigateur ne doit pas deviner le type d’un fichier.','nosniff, contre le MIME sniffing.'],
+'content-security-policy':['La liste des scripts autorisés sur la page.','CSP, contre le XSS.'],
+'retry-after':['Reviens dans quelques secondes.','Délai avant un nouvel essai.'],
+'www-authenticate':['Comment s’identifier correctement.','Schéma d’authentification attendu.'],
+'x-forwarded-for':['L’adresse d’origine du visiteur, transmise par le portier.','IP du client derrière un proxy.'],
+'httponly':['Les scripts ne peuvent pas lire ce bracelet.','Cookie inaccessible à JavaScript.'],
+'secure':['Le bracelet ne voyage que sur la route sécurisée.','Envoyé seulement en HTTPS.'],
+'samesite':['Le bracelet n’est pas envoyé depuis un autre site.','Limite l’envoi inter-sites (contre CSRF).'],
+'max-age':['Durée de vie du bracelet (0 = annulé).','Expiration en secondes.'],
+'path':['L’endroit du site où le bracelet est valable.','Portée du cookie.'],
+'bearer':['« Porteur » : celui qui montre le billet est accepté.','Jeton porteur dans Authorization.'],
+'sid':['Le numéro de ton bracelet, donc de ta session.','Identifiant de session.'],
+'user':['Ton pseudo.','Nom d’utilisateur.'],'username':['Ton pseudo.','Nom d’utilisateur.'],
+'pass':['Ton mot de passe (fictif ici).','Mot de passe.'],'password':['Ton mot de passe (fictif ici).','Mot de passe.'],
+'state':['Un mot magique choisi au départ et vérifié au retour.','Valeur anti-CSRF du flux OAuth.'],
+'code':['Le ticket à usage unique, à échanger contre des jetons.','Code d’autorisation.'],
+'client_id':['L’identifiant de l’application chez Google.','Identifiant public du client OAuth.'],
+'client_secret':['Le mot de passe secret de l’application.','Secret gardé côté serveur.'],
+'redirect_uri':['L’adresse où revenir après la connexion.','URI de retour, qui doit être exacte.'],
+'grant_type':['La façon de demander les jetons.','Type d’octroi OAuth.'],
+'scope':['Ce que tu acceptes de partager.','Périmètre demandé.'],
+'refresh':['Le jeton qui sert à en obtenir un nouveau.','Refresh token.'],'access':['Le jeton d’accès, de courte durée.','Access token.'],
+'token':['Le jeton, ta preuve d’identité.','Jeton d’authentification.'],
+'comment':['Le texte du commentaire.','Champ de formulaire.'],
+'dest':['Le destinataire du virement.','Champ de formulaire.'],'montant':['La somme.','Champ de formulaire.'],
+'csrf_token':['Le jeton secret propre à chaque formulaire.','Jeton anti-CSRF.']};
+const gl=k=>{const e=G[String(k).toLowerCase()];return e?(S.kid?e[0]:(e[1]||e[0])):''};
+function anat(t){const R=[],add=(a,b,c)=>{if(c)R.push([a,b,c])};
+t.split('\n').forEach(l=>{l=l.trim();if(!l)return;let m;
+if(m=l.match(/^(GET|POST|PUT|DELETE|OPTIONS|HEAD)\s+(\S+)(?:\s+(HTTP\/[\d.]+))?/)){add('Méthode',m[1],gl(m[1]));add('Chemin',m[2],S.kid?'La page ou la ressource demandée.':'URL relative de la ressource.');if(m[3])add('Version',m[3],S.kid?'La version du langage HTTP.':'Version du protocole HTTP.')}
+else if(m=l.match(/^HTTP\/([\d.]+)\s+(\d{3})\s*(.*)$/))add('Code '+m[2],m[3]||m[2],gl(m[2]));
+else if(m=l.match(/^([A-Za-z][A-Za-z0-9-]*):\s*(.*)$/)){const h=m[1].toLowerCase();add(m[1],m[2],gl(h));
+if(h=='set-cookie'||h=='cookie')m[2].split(';').forEach(p=>{p=p.trim();if(!p)return;const k=p.split('=')[0];add('↳ '+k,p.includes('=')?p.slice(k.length+1):'',gl(k))});
+if(h=='authorization'&&/^Bearer/i.test(m[2]))add('↳ Bearer','',gl('bearer'))}
+else if(/^[A-Za-z_]+=/.test(l))l.split('&').forEach(p=>{const i=p.indexOf('=');if(i>0)add(p.slice(0,i),p.slice(i+1),gl(p.slice(0,i)))})});
+return R}
+function vocab(c){const seen={},out=[];c.steps.forEach(s=>{const d=gl(s[2]),p=s[2].toLowerCase();if(d&&!seen[p]){seen[p]=1;out.push([s[2],d])}anat(s[8]).forEach(r=>{const k=r[0].replace('↳ ','').replace(/^Code /,'').toLowerCase();if(['chemin','version','méthode'].includes(k)||seen[k])return;seen[k]=1;out.push([r[0].replace('↳ ',''),r[2]])})});
+return out.length?`<h3>Vocabulaire de ce sujet</h3><dl class="vv">${out.slice(0,14).map(o=>`<dt>${esc(o[0])}</dt><dd>${esc(o[1])}</dd>`).join('')}</dl>`:''}
+function decode(s,i,c){const ex=S.kid&&c.k&&c.k.e?c.k.e[i]:s[7],j=s[8].includes('{JWT}'),h=esc(s[8]).replace('{JWT}',jwt()),pr=gl(s[2]),R=anat(s[8]),A=NM[s[0]],B=NM[s[1]];
+if(A&&B){const w=o=>S.kid?'C’est '+o.r:o.a;R.unshift(['Émetteur',A.n,w(A)],['Destinataire',B.n,w(B)],['Message',s[3],S.kid?'Ce qui voyage, en résumé.':'Résumé de l’échange.'])}
+if(j){R.push(['Jeton · en-tête (rouge)','alg, typ',S.kid?'La notice : comment le tampon est fabriqué.':'Algorithme de signature et type.']);R.push(['Jeton · charge (violet)','sub, role, exp',S.kid?'Les infos sur toi : qui tu es, jusqu’à quand.':'Claims : identité, rôle, expiration.']);R.push(['Jeton · signature (vert-bleu)','',S.kid?'Le tampon secret qui prouve que personne n’a triché.':'HMAC-SHA256 de en-tête.charge avec le secret.'])}
+return `<b>${esc(s[6])}</b><p>${ex}</p>`+(pr?`<p class="pr"><span class="tg">${esc(s[2])}</span>${esc(pr)}</p>`:'')+(R.length?`<h3>Anatomie du message</h3><table class="an">${R.map(r=>`<tr><td class="pt">${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join('')}</table>`:'')+`<h3>Contenu brut</h3><pre>${h}</pre>`+(j?`<pre>En-tête : ${JSON.stringify(JH)}\nCharge : ${JSON.stringify(JP)}\nSignature : HMAC-SHA256(en-tête.charge, secret) — fictive ici</pre>`:'')}
 function fly(a,b,col){const ball=$('#ball');if(!ball)return;const[x1,y1,x2,y2]=seg(NM[a],NM[b]),t0=performance.now(),D=700,ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
 (function f(){const p=Math.min(1,(performance.now()-t0)/D),e=ease(p);ball.setAttribute('cx',x1+(x2-x1)*e);ball.setAttribute('cy',y1+(y2-y1)*e);ball.setAttribute('fill',`var(${col})`);ball.style.opacity=p<1?1:0;const g=$('#ball2');if(g){g.setAttribute('cx',x1+(x2-x1)*e);g.setAttribute('cy',y1+(y2-y1)*e);g.setAttribute('fill',`var(${col})`);g.style.opacity=p<1?.25:0}if(p<1)requestAnimationFrame(f)})()}
 const cur=()=>([AUT,ATK,0,SEC][S.tab])[S.i[S.tab]];
@@ -371,12 +453,12 @@ const done=new Set(c.steps.slice(0,Math.max(0,S.n-1)).map(key)),seen=new Set();l
 c.steps.forEach(s=>{const k=key(s);if(s[0]==s[1]||seen.has(k))return;seen.add(k);const[p,q,r,t]=seg(M[s[0]],M[s[1]]),v=done.has(k);lines+=`<line x1="${p}" y1="${q}" x2="${r}" y2="${t}" stroke="var(${v?'--mut':'--line'})" stroke-width="2.2" ${v?'stroke-opacity=".55"':'stroke-dasharray="5 5"'}/>`});
 if(st&&st[0]!=st[1]){const[p,q,r,t]=seg(M[st[0]],M[st[1]]);act=`<line class="flow" x1="${p}" y1="${q}" x2="${r}" y2="${t}" stroke="var(--brand)" stroke-width="3" stroke-dasharray="8 5"/>`+head(p,q,r,t,'--brand')}
 const nd=ks.map(k=>{const o=M[k],on=st&&(st[0]==k||st[1]==k),cy=o.y+12;return `<g><title>${o.n} — ${S.kid?o.r:o.a}</title><ellipse cx="${o.x}" cy="${cy}" rx="40" ry="12" fill="var(--hero)"/>${on?`<ellipse cx="${o.x}" cy="${cy+2}" rx="50" ry="16" fill="none" stroke="var(${o.c})" stroke-width="2.5" stroke-dasharray="3 4"/>`:''}${IC[kindOf(o.n)](o.c,o.x,cy)}<text class="nm" x="${o.x}" y="${cy+38}" text-anchor="middle">${o.n}</text><text class="ad" x="${o.x}" y="${cy+51}" text-anchor="middle">${o.a}</text></g>`}).join('');
-const cap=st?`<text class="c1" x="300" y="14" text-anchor="middle">${M[st[0]].n} → ${M[st[1]].n}</text><text class="c2" x="300" y="32" text-anchor="middle">${esc(st[3])}</text>`:`<text class="c1" x="300" y="14" text-anchor="middle">Prêt</text><text class="c2" x="300" y="32" text-anchor="middle">Appuie sur Lecture ou Avancer</text>`;
+const cap=st?`<text class="c1" x="300" y="14" text-anchor="middle">${M[st[0]].n} → ${M[st[1]].n} · ${st[2]}</text><text class="c2" x="300" y="32" text-anchor="middle">${esc(st[3])}</text>`:`<text class="c1" x="300" y="14" text-anchor="middle">Prêt</text><text class="c2" x="300" y="32" text-anchor="middle">Appuie sur Lecture ou Avancer</text>`;
 $('#svg').setAttribute('viewBox','0 0 600 340');$('#svg').innerHTML='<defs><pattern id="iso" width="40" height="20" patternUnits="userSpaceOnUse"><path d="M0 10L20 0L40 10L20 20Z" fill="none" stroke="var(--line)" stroke-width=".6"/></pattern></defs><rect width="600" height="340" fill="url(#iso)" opacity=".7"/>'+cap+`<g transform="translate(${tx},${ty}) scale(${sc})">${lines}${act}${nd}<circle id="ball2" r="15" cx="-30" cy="-30" fill="var(--amb)" style="opacity:0"/><circle id="ball" r="8" cx="-30" cy="-30" fill="var(--amb)" style="opacity:0"/></g>`;return k=>M[k]?M[k].n:k}
 function renderTable(c,nm){const n=S.n,sel=S.sel<0?n-1:S.sel;let cum=0;
 const rows=c.steps.slice(0,n).map((s,i)=>{cum+=s[4];return `<tr class="${i==sel?'on':''}" onclick="S.sel=${i};go()"><td><span class="dn" style="background:var(${NM[s[0]].c})">${i+1}</span></td><td>${cum} ms</td><td>${nm(s[0])}</td><td>${nm(s[1])}</td><td>${s[2]}</td><td>${esc(s[3])}</td><td>${s[5]} o</td></tr>`}).join('');
 $('#bot').innerHTML=`<table><tr><th>N°</th><th>Temps</th><th>Source</th><th>Destination</th><th>Protocole</th><th>Info</th><th>Taille</th></tr>${rows}</table><div>${n?decode(c.steps[sel],sel,c):'<p style="color:var(--mut)">Appuyez sur « Avancer » ou « Lecture » : les paquets apparaissent ici. Cliquez sur une ligne pour la décoder.</p>'}</div>`}
-function flowView(){const L=[AUT,ATK,0,SEC][S.tab],c=cur();renderSteps(c,L);const nm=renderFlows(c);renderTable(c,nm);$('#right').innerHTML=fiche(K(c),S.tab==0?'Attaque courante.':'Défense.',K(c).atk)}
+function flowView(){const L=[AUT,ATK,0,SEC][S.tab],c=cur();renderSteps(c,L);const nm=renderFlows(c);renderTable(c,nm);$('#right').innerHTML=fiche(K(c),S.tab==0?'Attaque courante.':'Défense.',K(c).atk)+vocab(c)}
 /* ---------- Machine Learning ---------- */
 function rng(seed){let a=seed>>>0;return()=>{a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}}
 const gs=r=>Math.sqrt(-2*Math.log(r()||1e-9))*Math.cos(6.2832*r());
